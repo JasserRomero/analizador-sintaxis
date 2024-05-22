@@ -31,6 +31,8 @@
     $("#workspace").value = "";
     //document.getElementById("contenedorSalida").style.display = "none";
     $("#workspace").focus();
+    $("#salidaSintactico").innerHTML = "";
+    $("#salida").innerHTML = "";
   };
 
   const showError = (lines, position, typeError, msgError, line) => {
