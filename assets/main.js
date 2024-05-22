@@ -116,7 +116,10 @@
       if (regex.letter.test(currentChar)) {
         let letters = currentChar;
 
-        while (regex.letter.test(inputWithoutSpace[++current]) || regex.digit.test(inputWithoutSpace[current])) {
+        while (
+          regex.letter.test(inputWithoutSpace[++current]) ||
+          regex.digit.test(inputWithoutSpace[current])
+        ) {
           letters += inputWithoutSpace[current];
         }
 
@@ -182,19 +185,34 @@
 
         // COMPROBAR "INSERT"
         if (keywords.includes(arrayLines[i].value)) {
-          generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto" );
+          generateSyntax(
+            "success",
+            arrayLines[i].type,
+            arrayLines[i].value,
+            "Correcto"
+          );
           lineHtml += "<span>" + arrayLines[i].value + " </span>";
           i += 1;
 
           // COMPORBAR "INTO"
           if (keywords.includes(arrayLines[i].value)) {
-            generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+            generateSyntax(
+              "success",
+              arrayLines[i].type,
+              arrayLines[i].value,
+              "Correcto"
+            );
             lineHtml += "<span>" + arrayLines[i].value + " </span>";
             i += 1;
 
             // COMPROBAR NOMBRE DE LA TABLA
             if (arrayLines[i].type == "TEXTO") {
-              generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+              generateSyntax(
+                "success",
+                arrayLines[i].type,
+                arrayLines[i].value,
+                "Correcto"
+              );
               lineHtml += "<span>" + arrayLines[i].value + " </span>";
               i += 1;
 
@@ -208,11 +226,16 @@
                *
                * Si viene otra cosa, se desconoce
                */
-    
+
               if (arrayLines[i].type === "IDENTIFICADOR") {
                 // Caso #1. Identificador === SET
                 if (arrayLines[i].value.toUpperCase() === "SET") {
-                  generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                  generateSyntax(
+                    "success",
+                    arrayLines[i].type,
+                    arrayLines[i].value,
+                    "Correcto"
+                  );
                   lineHtml += "<span>" + arrayLines[i].value + " </span>";
                   i += 1;
 
@@ -221,77 +244,183 @@
                   while (arrayLines[i].value !== ";") {
                     // Comprobar el nombre del campo
                     if (arrayLines[i].type === "TEXTO") {
-                      generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                      generateSyntax(
+                        "success",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Correcto"
+                      );
                       lineHtml += "<span>" + arrayLines[i].value + " </span>";
                       i += 1;
 
                       // Comprobar el operador "="
                       if (arrayLines[i].value === "=") {
-                        generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                        generateSyntax(
+                          "success",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Correcto"
+                        );
                         lineHtml += "<span>" + arrayLines[i].value + " </span>";
                         i += 1;
 
                         // Comprobar el valor entre comillas simples o dobles
-                        if (arrayLines[i].value === '"' || arrayLines[i].value === "'") {
+                        if (
+                          arrayLines[i].value === '"' ||
+                          arrayLines[i].value === "'"
+                        ) {
                           let quoteType = arrayLines[i].value;
-                          generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                          lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                          generateSyntax(
+                            "success",
+                            arrayLines[i].type,
+                            arrayLines[i].value,
+                            "Correcto"
+                          );
+                          lineHtml +=
+                            "<span>" + arrayLines[i].value + " </span>";
                           i += 1;
 
                           // Comprobar el texto dentro de las comillas
                           if (arrayLines[i].type === "TEXTO") {
-                            generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                            lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                            generateSyntax(
+                              "success",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Correcto"
+                            );
+                            lineHtml +=
+                              "<span>" + arrayLines[i].value + " </span>";
                             i += 1;
 
                             // Comprobar la comilla de cierre
                             if (arrayLines[i].value === quoteType) {
-                              generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                              lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                              generateSyntax(
+                                "success",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Correcto"
+                              );
+                              lineHtml +=
+                                "<span>" + arrayLines[i].value + " </span>";
                               i += 1;
 
                               // Comprobar la coma o el punto y coma
-                              if (arrayLines[i].value === "," || arrayLines[i].value === ";") {
-                                lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                              if (
+                                arrayLines[i].value === "," ||
+                                arrayLines[i].value === ";"
+                              ) {
+                                lineHtml +=
+                                  "<span>" + arrayLines[i].value + " </span>";
                                 if (arrayLines[i].value === ",") {
-                                  generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                                  generateSyntax(
+                                    "success",
+                                    arrayLines[i].type,
+                                    arrayLines[i].value,
+                                    "Correcto"
+                                  );
                                   i += 1;
                                 } else {
                                   break;
                                 }
                               } else {
-                                showError(lines, arrayLines[i].position, arrayLines[i].value, "',' o ';'", lineHtml);
-                                generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                showError(
+                                  lines,
+                                  arrayLines[i].position,
+                                  arrayLines[i].value,
+                                  "',' o ';'",
+                                  lineHtml
+                                );
+                                generateSyntax(
+                                  "danger",
+                                  arrayLines[i].type,
+                                  arrayLines[i].value,
+                                  "Incorrecto"
+                                );
                                 error = true;
                                 break;
                               }
                             } else {
-                              showError(lines, arrayLines[i].position, arrayLines[i].value, `Se esperaba ${quoteType} de cierre`, lineHtml);
-                              generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                              showError(
+                                lines,
+                                arrayLines[i].position,
+                                arrayLines[i].value,
+                                `Se esperaba ${quoteType} de cierre`,
+                                lineHtml
+                              );
+                              generateSyntax(
+                                "danger",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Incorrecto"
+                              );
                               error = true;
                               break;
                             }
                           } else {
-                            showError(lines, arrayLines[i].position, arrayLines[i].value, "TEXTO", lineHtml);
-                            generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                            showError(
+                              lines,
+                              arrayLines[i].position,
+                              arrayLines[i].value,
+                              "TEXTO",
+                              lineHtml
+                            );
+                            generateSyntax(
+                              "danger",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Incorrecto"
+                            );
                             error = true;
                             break;
                           }
                         } else {
-                          showError(lines, arrayLines[i].position, arrayLines[i].value, `' o "`, lineHtml);
-                          generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                          showError(
+                            lines,
+                            arrayLines[i].position,
+                            arrayLines[i].value,
+                            `' o "`,
+                            lineHtml
+                          );
+                          generateSyntax(
+                            "danger",
+                            arrayLines[i].type,
+                            arrayLines[i].value,
+                            "Incorrecto"
+                          );
                           error = true;
                           break;
                         }
                       } else {
-                        showError(lines, arrayLines[i].position, arrayLines[i].value, "=", lineHtml);
-                        generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                        showError(
+                          lines,
+                          arrayLines[i].position,
+                          arrayLines[i].value,
+                          "=",
+                          lineHtml
+                        );
+                        generateSyntax(
+                          "danger",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Incorrecto"
+                        );
                         error = true;
                         break;
                       }
                     } else {
-                      showError(lines, arrayLines[i].position, arrayLines[i].value, "TEXTO", lineHtml);
-                      generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                      showError(
+                        lines,
+                        arrayLines[i].position,
+                        arrayLines[i].value,
+                        "TEXTO",
+                        lineHtml
+                      );
+                      generateSyntax(
+                        "danger",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Incorrecto"
+                      );
                       error = true;
                       break;
                     }
@@ -302,14 +431,27 @@
                 // Caso #2. Identificador === VALUES
                 if (arrayLines[i].value.toUpperCase() === "VALUES") {
                   if (arrayLines[i].value === "(") {
-                    generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                    generateSyntax(
+                      "success",
+                      arrayLines[i].type,
+                      arrayLines[i].value,
+                      "Correcto"
+                    );
                     lineHtml += "<span>" + arrayLines[i].value + " </span>";
                     i += 1;
 
                     // COMPROBAR CAMPOS
                     while (arrayLines[i].value !== ")") {
-                      if (arrayLines[i].value !== "," && arrayLines[i].value !== ")") {
-                        generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                      if (
+                        arrayLines[i].value !== "," &&
+                        arrayLines[i].value !== ")"
+                      ) {
+                        generateSyntax(
+                          "success",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Correcto"
+                        );
                         lineHtml += "<span>" + arrayLines[i].value + " </span>";
                       } else {
                         lineHtml += "<span>" + arrayLines[i].value + " </span>";
@@ -319,80 +461,186 @@
 
                     // COMPROBAR CIERRE DE PARENTESIS )
                     if (arrayLines[i].value === ")") {
-                      generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                      generateSyntax(
+                        "success",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Correcto"
+                      );
                       lineHtml += "<span>" + arrayLines[i].value + " </span>";
                       i += 1;
 
                       // COMPROBAR "VALUES"
                       if (arrayLines[i].value.toUpperCase() === "VALUES") {
-                        generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                        generateSyntax(
+                          "success",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Correcto"
+                        );
                         lineHtml += "<span>" + arrayLines[i].value + " </span>";
                         i += 1;
 
                         // COMPROBAR APERTURA DE PARENTESIS PARA LOS VALORES (
                         if (arrayLines[i].value === "(") {
-                          generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                          lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                          generateSyntax(
+                            "success",
+                            arrayLines[i].type,
+                            arrayLines[i].value,
+                            "Correcto"
+                          );
+                          lineHtml +=
+                            "<span>" + arrayLines[i].value + " </span>";
                           i += 1;
 
                           // COMPROBAR VALORES
-                          let error = false; 
+                          let error = false;
                           while (arrayLines[i].value !== ")") {
                             // Comprobar si el valor empieza con comilla simple o doble
-                            if (arrayLines[i].value === '"' || arrayLines[i].value === "'") {
+                            if (
+                              arrayLines[i].value === '"' ||
+                              arrayLines[i].value === "'"
+                            ) {
                               let quoteType = arrayLines[i].value;
-                              generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                              lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                              generateSyntax(
+                                "success",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Correcto"
+                              );
+                              lineHtml +=
+                                "<span>" + arrayLines[i].value + " </span>";
                               i += 1;
 
                               // Comprobar el texto dentro de las comillas
                               if (arrayLines[i].type === "TEXTO") {
-                                generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                                lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                                generateSyntax(
+                                  "success",
+                                  arrayLines[i].type,
+                                  arrayLines[i].value,
+                                  "Correcto"
+                                );
+                                lineHtml +=
+                                  "<span>" + arrayLines[i].value + " </span>";
                                 i += 1;
 
                                 // Comprobar la comilla de cierre
                                 if (arrayLines[i].value === quoteType) {
-                                  generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                                  lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                                  generateSyntax(
+                                    "success",
+                                    arrayLines[i].type,
+                                    arrayLines[i].value,
+                                    "Correcto"
+                                  );
+                                  lineHtml +=
+                                    "<span>" + arrayLines[i].value + " </span>";
                                   i += 1;
 
                                   // Comprobar la coma o el cierre de paréntesis
-                                  if (arrayLines[i].value === "," || arrayLines[i].value === ")") {
-                                    lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                                  if (
+                                    arrayLines[i].value === "," ||
+                                    arrayLines[i].value === ")"
+                                  ) {
+                                    lineHtml +=
+                                      "<span>" +
+                                      arrayLines[i].value +
+                                      " </span>";
                                     if (arrayLines[i].value === ",") {
-                                      generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                                      generateSyntax(
+                                        "success",
+                                        arrayLines[i].type,
+                                        arrayLines[i].value,
+                                        "Correcto"
+                                      );
                                       i += 1;
 
                                       // Validar que tras una coma venga otro valor que empieza con comillas
-                                      if (arrayLines[i].value !== '"' && arrayLines[i].value !== "'") {
-                                        showError(lines, arrayLines[i].position, arrayLines[i].value, `' o "`, lineHtml);
-                                        generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                      if (
+                                        arrayLines[i].value !== '"' &&
+                                        arrayLines[i].value !== "'"
+                                      ) {
+                                        showError(
+                                          lines,
+                                          arrayLines[i].position,
+                                          arrayLines[i].value,
+                                          `' o "`,
+                                          lineHtml
+                                        );
+                                        generateSyntax(
+                                          "danger",
+                                          arrayLines[i].type,
+                                          arrayLines[i].value,
+                                          "Incorrecto"
+                                        );
                                         error = true;
                                         break;
                                       }
                                     }
                                   } else {
-                                    showError(lines, arrayLines[i].position, arrayLines[i].value, "',' o ')'", lineHtml);
-                                    generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                    showError(
+                                      lines,
+                                      arrayLines[i].position,
+                                      arrayLines[i].value,
+                                      "',' o ')'",
+                                      lineHtml
+                                    );
+                                    generateSyntax(
+                                      "danger",
+                                      arrayLines[i].type,
+                                      arrayLines[i].value,
+                                      "Incorrecto"
+                                    );
                                     error = true;
                                     break;
                                   }
                                 } else {
-                                  showError(lines, arrayLines[i].position, arrayLines[i].value, `Se esperaba ${quoteType} de cierre`, lineHtml);
-                                  generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                  showError(
+                                    lines,
+                                    arrayLines[i].position,
+                                    arrayLines[i].value,
+                                    `Se esperaba ${quoteType} de cierre`,
+                                    lineHtml
+                                  );
+                                  generateSyntax(
+                                    "danger",
+                                    arrayLines[i].type,
+                                    arrayLines[i].value,
+                                    "Incorrecto"
+                                  );
                                   error = true;
                                   break;
                                 }
                               } else {
-                                showError(lines, arrayLines[i].position, arrayLines[i].value, "TEXTO", lineHtml);
-                                generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                showError(
+                                  lines,
+                                  arrayLines[i].position,
+                                  arrayLines[i].value,
+                                  "TEXTO",
+                                  lineHtml
+                                );
+                                generateSyntax(
+                                  "danger",
+                                  arrayLines[i].type,
+                                  arrayLines[i].value,
+                                  "Incorrecto"
+                                );
                                 error = true;
                                 break;
                               }
                             } else {
-                              showError(lines, arrayLines[i].position, arrayLines[i].value, `' o "`, lineHtml);
-                              generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                              showError(
+                                lines,
+                                arrayLines[i].position,
+                                arrayLines[i].value,
+                                `' o "`,
+                                lineHtml
+                              );
+                              generateSyntax(
+                                "danger",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Incorrecto"
+                              );
                               error = true;
                               break;
                             }
@@ -401,46 +649,123 @@
 
                           // Comprobar cierre de paréntesis de los valores
                           if (arrayLines[i].value === ")") {
-                            generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                            lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                            generateSyntax(
+                              "success",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Correcto"
+                            );
+                            lineHtml +=
+                              "<span>" + arrayLines[i].value + " </span>";
                             i += 1;
                           } else {
-                            showError(lines, arrayLines[i].position, arrayLines[i].value, ")", lineHtml);
-                            generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                            showError(
+                              lines,
+                              arrayLines[i].position,
+                              arrayLines[i].value,
+                              ")",
+                              lineHtml
+                            );
+                            generateSyntax(
+                              "danger",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Incorrecto"
+                            );
                             break;
                           }
                         } else {
-                          showError(lines, arrayLines[i].position, arrayLines[i].value, "(", lineHtml);
-                          generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                          showError(
+                            lines,
+                            arrayLines[i].position,
+                            arrayLines[i].value,
+                            "(",
+                            lineHtml
+                          );
+                          generateSyntax(
+                            "danger",
+                            arrayLines[i].type,
+                            arrayLines[i].value,
+                            "Incorrecto"
+                          );
                           break;
                         }
                       } else {
-                        showError(lines, arrayLines[i].position, arrayLines[i].value, "VALUES", lineHtml);
-                        generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                        showError(
+                          lines,
+                          arrayLines[i].position,
+                          arrayLines[i].value,
+                          "VALUES",
+                          lineHtml
+                        );
+                        generateSyntax(
+                          "danger",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Incorrecto"
+                        );
                         break;
                       }
                     } else {
-                      showError(lines, arrayLines[i].position, arrayLines[i].value, ")", lineHtml);
-                      generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                      showError(
+                        lines,
+                        arrayLines[i].position,
+                        arrayLines[i].value,
+                        ")",
+                        lineHtml
+                      );
+                      generateSyntax(
+                        "danger",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Incorrecto"
+                      );
                       break;
                     }
                   } else {
-                    showError(lines, arrayLines[i].position, arrayLines[i].value, "(", lineHtml);
-                    generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                    showError(
+                      lines,
+                      arrayLines[i].position,
+                      arrayLines[i].value,
+                      "(",
+                      lineHtml
+                    );
+                    generateSyntax(
+                      "danger",
+                      arrayLines[i].type,
+                      arrayLines[i].value,
+                      "Incorrecto"
+                    );
                     break;
                   }
                 }
-              } else if (arrayLines[i].type === "SIMBOLO" && arrayLines[i].value !== ";") {
+              } else if (
+                arrayLines[i].type === "SIMBOLO" &&
+                arrayLines[i].value !== ";"
+              ) {
                 // COMPROBAR APERTURA DE PARENTESIS (
                 if (arrayLines[i].value === "(") {
-                  generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                  generateSyntax(
+                    "success",
+                    arrayLines[i].type,
+                    arrayLines[i].value,
+                    "Correcto"
+                  );
                   lineHtml += "<span>" + arrayLines[i].value + " </span>";
                   i += 1;
 
                   // COMPROBAR CAMPOS
                   while (arrayLines[i].value !== ")") {
-                    if (arrayLines[i].value !== "," && arrayLines[i].value !== ")") {
-                      generateSyntax("success",arrayLines[i].type,arrayLines[i].value,"Correcto");
+                    if (
+                      arrayLines[i].value !== "," &&
+                      arrayLines[i].value !== ")"
+                    ) {
+                      generateSyntax(
+                        "success",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Correcto"
+                      );
                       lineHtml += "<span>" + arrayLines[i].value + " </span>";
                     } else {
                       lineHtml += "<span>" + arrayLines[i].value + " </span>";
@@ -450,116 +775,293 @@
 
                   // COMPROBAR CIERRE DE PARENTESIS )
                   if (arrayLines[i].value === ")") {
-                    generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                    generateSyntax(
+                      "success",
+                      arrayLines[i].type,
+                      arrayLines[i].value,
+                      "Correcto"
+                    );
                     lineHtml += "<span>" + arrayLines[i].value + " </span>";
                     i += 1;
 
                     // COMPROBAR VALUES
                     if (arrayLines[i].value === "VALUES") {
-                      generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                      generateSyntax(
+                        "success",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Correcto"
+                      );
                       lineHtml += "<span>" + arrayLines[i].value + " </span>";
                       i += 1;
 
                       if (arrayLines[i].value === "(") {
-                        generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                        generateSyntax(
+                          "success",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Correcto"
+                        );
                         lineHtml += "<span>" + arrayLines[i].value + " </span>";
                         i += 1;
 
                         // COMPROBAR VALORES
-                        let error = false; 
+                        let error = false;
                         while (arrayLines[i].value !== ")") {
                           // Comprobar si el valor empieza con comilla simple o doble
-                          if (arrayLines[i].value === '"' || arrayLines[i].value === "'") {
+                          if (
+                            arrayLines[i].value === '"' ||
+                            arrayLines[i].value === "'"
+                          ) {
                             let quoteType = arrayLines[i].value;
-                            generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                            lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                            generateSyntax(
+                              "success",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Correcto"
+                            );
+                            lineHtml +=
+                              "<span>" + arrayLines[i].value + " </span>";
                             i += 1;
 
                             // Comprobar el texto dentro de las comillas
                             if (arrayLines[i].type === "TEXTO") {
-                              generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                              lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                              generateSyntax(
+                                "success",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Correcto"
+                              );
+                              lineHtml +=
+                                "<span>" + arrayLines[i].value + " </span>";
                               i += 1;
 
                               // Comprobar la comilla de cierre
                               if (arrayLines[i].value === quoteType) {
-                                generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
-                                lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                                generateSyntax(
+                                  "success",
+                                  arrayLines[i].type,
+                                  arrayLines[i].value,
+                                  "Correcto"
+                                );
+                                lineHtml +=
+                                  "<span>" + arrayLines[i].value + " </span>";
                                 i += 1;
 
                                 // Comprobar la coma o el cierre de paréntesis
-                                if (arrayLines[i].value === "," || arrayLines[i].value === ")") {
-                                  lineHtml += "<span>" + arrayLines[i].value + " </span>";
+                                if (
+                                  arrayLines[i].value === "," ||
+                                  arrayLines[i].value === ")"
+                                ) {
+                                  lineHtml +=
+                                    "<span>" + arrayLines[i].value + " </span>";
                                   if (arrayLines[i].value === ",") {
-                                    generateSyntax("success", arrayLines[i].type, arrayLines[i].value, "Correcto");
+                                    generateSyntax(
+                                      "success",
+                                      arrayLines[i].type,
+                                      arrayLines[i].value,
+                                      "Correcto"
+                                    );
                                     i += 1;
                                   }
                                 } else {
-                                  showError(lines, arrayLines[i].position, arrayLines[i].value, "',' o ')'", lineHtml);
-                                  generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                  showError(
+                                    lines,
+                                    arrayLines[i].position,
+                                    arrayLines[i].value,
+                                    "',' o ')'",
+                                    lineHtml
+                                  );
+                                  generateSyntax(
+                                    "danger",
+                                    arrayLines[i].type,
+                                    arrayLines[i].value,
+                                    "Incorrecto"
+                                  );
                                   error = true;
                                   break;
                                 }
                               } else {
-                                showError(lines, arrayLines[i].position, arrayLines[i].value, `Se esperaba ${quoteType} de cierre`, lineHtml);
-                                generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                                showError(
+                                  lines,
+                                  arrayLines[i].position,
+                                  arrayLines[i].value,
+                                  `Se esperaba ${quoteType} de cierre`,
+                                  lineHtml
+                                );
+                                generateSyntax(
+                                  "danger",
+                                  arrayLines[i].type,
+                                  arrayLines[i].value,
+                                  "Incorrecto"
+                                );
                                 error = true;
                                 break;
                               }
                             } else {
-                              showError(lines, arrayLines[i].position, arrayLines[i].value, "TEXTO", lineHtml);
-                              generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                              showError(
+                                lines,
+                                arrayLines[i].position,
+                                arrayLines[i].value,
+                                "TEXTO",
+                                lineHtml
+                              );
+                              generateSyntax(
+                                "danger",
+                                arrayLines[i].type,
+                                arrayLines[i].value,
+                                "Incorrecto"
+                              );
                               error = true;
                               break;
                             }
                           } else {
                             console.log(arrayLines[i].value);
-                            showError(lines, arrayLines[i].position, arrayLines[i].value, `' o "`, lineHtml);
-                            generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                            showError(
+                              lines,
+                              arrayLines[i].position,
+                              arrayLines[i].value,
+                              `' o "`,
+                              lineHtml
+                            );
+                            generateSyntax(
+                              "danger",
+                              arrayLines[i].type,
+                              arrayLines[i].value,
+                              "Incorrecto"
+                            );
                             error = true;
                             break;
                           }
                         }
 
-                        if (error)  break;
+                        if (error) break;
                       } else {
-                        showError(lines, arrayLines[i].position, arrayLines[i].value, `(`, lineHtml);
-                        generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                        showError(
+                          lines,
+                          arrayLines[i].position,
+                          arrayLines[i].value,
+                          `(`,
+                          lineHtml
+                        );
+                        generateSyntax(
+                          "danger",
+                          arrayLines[i].type,
+                          arrayLines[i].value,
+                          "Incorrecto"
+                        );
                         break;
                       }
-                    
                     } else {
-                      showError(lines, arrayLines[i].position, arrayLines[i].value, "VALUES", lineHtml);
-                      generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                      showError(
+                        lines,
+                        arrayLines[i].position,
+                        arrayLines[i].value,
+                        "VALUES",
+                        lineHtml
+                      );
+                      generateSyntax(
+                        "danger",
+                        arrayLines[i].type,
+                        arrayLines[i].value,
+                        "Incorrecto"
+                      );
                       break;
                     }
                   } else {
-                    showError(lines, arrayLines[i].position, arrayLines[i].value, ")", lineHtml);
-                    generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                    showError(
+                      lines,
+                      arrayLines[i].position,
+                      arrayLines[i].value,
+                      ")",
+                      lineHtml
+                    );
+                    generateSyntax(
+                      "danger",
+                      arrayLines[i].type,
+                      arrayLines[i].value,
+                      "Incorrecto"
+                    );
                     break;
                   }
                 } else {
-                  showError(lines, arrayLines[i].position, arrayLines[i].value, "(", lineHtml);
-                  generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+                  showError(
+                    lines,
+                    arrayLines[i].position,
+                    arrayLines[i].value,
+                    "(",
+                    lineHtml
+                  );
+                  generateSyntax(
+                    "danger",
+                    arrayLines[i].type,
+                    arrayLines[i].value,
+                    "Incorrecto"
+                  );
                   break;
                 }
               } else {
-                console.log(arrayLines[i]);
+                showError(
+                  lines,
+                  arrayLines[i].position,
+                  arrayLines[i].value,
+                  "SET o VALUES o (",
+                  lineHtml
+                );
+                generateSyntax(
+                  "danger",
+                  arrayLines[i].type,
+                  arrayLines[i].value,
+                  "Incorrecto"
+                );
                 break;
               }
             } else {
-              showError(lines, arrayLines[i].position, arrayLines[i].value, "Nombre tabla o nombre invalido", lineHtml);
-              generateSyntax("danger", arrayLines[i].type, arrayLines[i].value, "Incorrecto");
+              showError(
+                lines,
+                arrayLines[i].position,
+                arrayLines[i].value,
+                "Nombre tabla o nombre invalido",
+                lineHtml
+              );
+              generateSyntax(
+                "danger",
+                arrayLines[i].type,
+                arrayLines[i].value,
+                "Incorrecto"
+              );
               break;
             }
           } else {
-            showError(lines, arrayLines[i].position, arrayLines[i].value, "INTO", lineHtml );
-            generateSyntax("danger",arrayLines[i].type,arrayLines[i].value,"Incorrecto");
+            showError(
+              lines,
+              arrayLines[i].position,
+              arrayLines[i].value,
+              "INTO",
+              lineHtml
+            );
+            generateSyntax(
+              "danger",
+              arrayLines[i].type,
+              arrayLines[i].value,
+              "Incorrecto"
+            );
             break;
           }
         } else {
-          showError(lines,arrayLines[i].position,arrayLines[i].value,"INSERT",lineHtml);
-          generateSyntax("danger",arrayLines[i].type,arrayLines[i].value,"Incorrecto");
+          showError(
+            lines,
+            arrayLines[i].position,
+            arrayLines[i].value,
+            "INSERT",
+            lineHtml
+          );
+          generateSyntax(
+            "danger",
+            arrayLines[i].type,
+            arrayLines[i].value,
+            "Incorrecto"
+          );
           break;
         }
       }
