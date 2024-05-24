@@ -1,11 +1,15 @@
 * {
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 
 main {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.table-max-300 {
+  max-height: 250px !important;
 }
